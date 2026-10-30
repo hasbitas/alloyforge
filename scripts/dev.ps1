@@ -1,14 +1,20 @@
-# Start both local demo servers after installing the dependencies in README.md.
+# Implementation for start.bat; beginners should use the root launchers.
 $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $python = Join-Path $repoRoot ".venv/Scripts/python.exe"
 if (-not (Test-Path -LiteralPath $python)) {
-    throw 'Create .venv and run: python -m pip install -e ".[dev]"'
+    throw 'Python environment is missing. Run setup.bat first.'
 }
 if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "frontend/node_modules"))) {
-    throw "Install frontend dependencies first: cd frontend; npm.cmd install"
+    throw "Browser interface dependencies are missing. Run setup.bat first."
 }
 $npm = (Get-Command npm.cmd -ErrorAction Stop).Source
+foreach ($port in @(8000, 5173)) {
+    $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $port)
+    try { $listener.Start() }
+    catch { throw "Port $port is in use. Stop the other app and try start.bat again." }
+    finally { $listener.Stop() }
+}
 $backend = $null
 Push-Location $repoRoot
 try {
@@ -27,14 +33,17 @@ try {
         }
     }
     if (-not $ready) { throw "Backend did not become ready on port 8000." }
-    Write-Host "UI: http://127.0.0.1:5173 | API: http://127.0.0.1:8000/docs"
+    Write-Host "Open http://127.0.0.1:5173 in your browser. API: http://127.0.0.1:8000/docs"
     Write-Host "Press Ctrl+C to stop the demo servers."
     Set-Location (Join-Path $repoRoot "frontend")
-    & $npm run dev -- --host 127.0.0.1 --strictPort
+    & $npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
     if ($LASTEXITCODE -ne 0) { throw "Frontend exited with code $LASTEXITCODE." }
 } finally {
     if ($null -ne $backend -and -not $backend.HasExited) {
-        Stop-Process -Id $backend.Id
+        # Windows venv Python can have a child interpreter. Stop the whole tree.
+        & taskkill.exe /PID $backend.Id /T /F | Out-Null
+        if (-not $backend.HasExited) { Stop-Process -Id $backend.Id }
+        $backend.WaitForExit()
     }
     Pop-Location
 }
