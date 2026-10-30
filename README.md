@@ -12,13 +12,6 @@ It shows a simple 3D atom preview, a stretching curve, and downloadable files.
 For example: `1000 °C + 4.5 g/cm³ + 900 MPa → suggested mixtures + a report`.
 These are demonstration estimates, not measurements or proof that a material will work.
 
-## Screenshot / GIF
-
-<!-- DEMO_VIDEO -->
-
-A screenshot or short recording will go here. Store images and GIFs in [`docs/`](docs/).
-No preview is included yet.
-
 ## Quick start (5 minutes)
 
 Allow extra time for the first download: the Python packages can be large.
