@@ -27,7 +27,7 @@ You need an internet connection for setup. No API key or paid model service is n
    If you already use Git, you can instead run:
 
    ```sh
-   git clone https://github.com/1at33/alloyforge.git
+   git clone https://github.com/hasbitas/alloyforge.git
    cd alloyforge
    ```
 
