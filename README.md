@@ -49,7 +49,7 @@ You need an internet connection for setup. No API key or paid model service is n
    ```
 
 5. **Open the page.** Keep the command window open. When it shows the address, open
-   <http://127.0.0.1:5173> in your browser. Wait for the frontend's **Local** address
+   `http://127.0.0.1:5173` in your browser (a local address that works only on your computer while the app is running). Wait for the frontend's **Local** address
    before loading the page. You should see **AlloyForge**, target inputs, and a
    **Start design** button. Press **Ctrl+C** in the launcher window to stop both servers
    (on Windows, answer **Y** if asked to terminate the batch job).
@@ -221,8 +221,8 @@ by Git. To check setup prerequisites without installing packages, run
 ### API and configuration
 
 The **API**, the routes programs use to talk to the backend, is documented at
-<http://127.0.0.1:8000/docs> when the backend is running.
-Check its health at <http://127.0.0.1:8000/health>.
+`http://127.0.0.1:8000/docs` when the backend is running.
+Check its health at `http://127.0.0.1:8000/health`.
 Vite (the frontend development server) forwards `/api` and `/health` requests
 to the backend.
 
