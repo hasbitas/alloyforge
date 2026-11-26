@@ -321,7 +321,7 @@ policy. It is intended for local use.
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2026 1at33.
+[MIT](LICENSE) — Copyright (c) 2026 hasbitas.
 
 ## Acknowledgements
 
